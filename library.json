@@ -1,0 +1,21 @@
+{
+    "name": "Funduino",
+    "description": "Nastroje pro Funduino (HeSa1) modul k Arduno UNO",
+    "keywords": "funduino, HeSa, HeSa1, display",
+    "authors": [
+        {
+            "name": "Jiri Gabriel",
+            "email": "tykefcz@gamil.com",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "none",
+        "url": "https://localhost/Funduino"
+    },
+    "version": "1.0.1",
+    "frameworks": "Arduino",
+    "examples": [
+        "examples/*/*.pde"
+    ]
+}

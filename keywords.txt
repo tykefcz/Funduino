@@ -1,0 +1,43 @@
+#######################################
+# Syntax Coloring Map For Funduino
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Funduino	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+DiMili	KEYWORD2
+step	KEYWORD2
+begin	KEYWORD2
+trimVolt	KEYWORD2
+dispInt	KEYWORD2
+dispFloat	KEYWORD2
+butt1	KEYWORD2
+butt2	KEYWORD2
+butt3	KEYWORD2
+butt	KEYWORD2
+buttons	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+FUNDUI_LED1	LITERAL1
+FUNDUI_LED2	LITERAL1
+FUNDUI_LED3	LITERAL1
+FUNDUI_LED4	LITERAL1
+FUNDUI_SERVO1	LITERAL1
+FUNDUI_SERVO2	LITERAL1
+FUNDUI_SERVO3	LITERAL1
+FUNDUI_SERVO4	LITERAL1
+FUNDUI_BUZZER	LITERAL1
