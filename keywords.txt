@@ -13,16 +13,27 @@ Funduino	KEYWORD1
 #######################################
 
 DiMili	KEYWORD2
+divmod10	KEYWORD2
+mapf		KEYWORD2
 step	KEYWORD2
 begin	KEYWORD2
 trimVolt	KEYWORD2
 dispInt	KEYWORD2
 dispFloat	KEYWORD2
+clearDisplay	KEYWORD2
+enableDisplay	KEYWORD2
 butt1	KEYWORD2
 butt2	KEYWORD2
 butt3	KEYWORD2
 butt	KEYWORD2
 buttons	KEYWORD2
+led	KEYWORD2
+buttPressed	KEYWORD2
+buttReleased	KEYWORD2
+isTimer		KEYWORD2
+timerTime	KEYWORD2
+timerStop	KEYWORD2
+timerStart	KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
@@ -41,3 +52,5 @@ FUNDUI_SERVO2	LITERAL1
 FUNDUI_SERVO3	LITERAL1
 FUNDUI_SERVO4	LITERAL1
 FUNDUI_BUZZER	LITERAL1
+FUNDUI_CONN7A	LITERAL1
+FUNDUI_CONN7B	LITERAL1

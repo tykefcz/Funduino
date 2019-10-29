@@ -18,12 +18,12 @@ void loop() {
   static byte angle=90;
   static bool mode=false;
   F.step();
-  if (F.mili>1000) { // Sekundu ceka na zacatku
-    byte v=F.mili & 0xFF;
-    if (F.butt_pressed(1)) {
+  if (F.Mili>1000) { // Sekundu ceka na zacatku
+    byte v=F.Mili & 0xFF;
+    if (F.buttPressed(1)) {
       F.led(1);
       mode=!mode;
-    } else if (F.butt_released(1)) 
+    } else if (F.buttReleased(1)) 
       F.led(1,false);
     if ((v & 0xFF) == 0) { // kazdych 256 milisekund cca 4 x za sekundu
       if (mode)
@@ -33,16 +33,16 @@ void loop() {
     }
     bool changed=false;
     static byte repeatskip=0;
-    if (F.butt_pressed(2)) {
+    if (F.buttPressed(2)) {
       angle++; // to left
-      F.timer_start(0,100); // 10 per sec autorepeat
+      F.timerStart(0,100); // 10 per sec autorepeat
       repeatskip=6;
       F.led(2);
       changed=true;
-    } else if (F.butt_released(2)) {
-      F.timer_stop(0);
+    } else if (F.buttReleased(2)) {
+      F.timerStop(0);
       F.led(2,false);
-    } else if (F.is_timer(0)) {
+    } else if (F.isTimer(0)) {
       if (repeatskip)
         repeatskip--;
       else {
@@ -50,19 +50,19 @@ void loop() {
         changed=true;
       }
     }
-    if (F.butt_pressed(3)) {
+    if (F.buttPressed(3)) {
       if ((F.buttons()&6)==0) // both buttons
         angle=90;
       else
         angle--; // to right
-      F.timer_start(1,100); // 10 per sec autorepeat
+      F.timerStart(1,100); // 10 per sec autorepeat
       repeatskip=6;
       F.led(3);
       changed=true;
-    } else if (F.butt_released(3)) {
-      F.timer_stop(1);
+    } else if (F.buttReleased(3)) {
+      F.timerStop(1);
       F.led(3,false);
-    } else if (F.is_timer(1)) {
+    } else if (F.isTimer(1)) {
       if (repeatskip)
         repeatskip--;
       else {

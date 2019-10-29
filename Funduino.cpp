@@ -38,7 +38,7 @@ void Funduino::segment(byte segs,byte digit) {
   _flags|=1; // display latch is HIGH - go down
 }
 
-void Funduino::timer_start(byte i, int time, bool repeat) {
+void Funduino::timerStart(byte i, int time, bool repeat) {
   if (i>=8) return;
   if (time > 0 && time < 32752) { // Start time in range 1..0x7FF0
     _timers_start[i] = _mimi;
@@ -49,7 +49,7 @@ void Funduino::timer_start(byte i, int time, bool repeat) {
   }
 }
 
-int Funduino::timer_time(byte i) {
+int Funduino::timerTime(byte i) {
   if (i>=8 || _timers_togo[i] == _timers_start[i])
     return 0; // disabled timer
   if (_timers_togo[i] > _timers_start[i] || _mimi < _timers_start[i])
@@ -58,7 +58,7 @@ int Funduino::timer_time(byte i) {
     return _timers_togo[i] + (65535U - _mimi) + 1;
 }
 
-bool Funduino::is_timer(byte i) {
+bool Funduino::isTimer(byte i) {
   if (i>=8) return false;
   byte m=(1<<i);
   if ((_timtrig & m)!=0) {
@@ -68,7 +68,7 @@ bool Funduino::is_timer(byte i) {
   return false;
 }
 
-bool Funduino::butt_pressed(byte i) {
+bool Funduino::buttPressed(byte i) {
   if (i==0 || i>3) return false;
   byte m=(1<<(i-1));
   if ((_buttrig & m)!=0) {
@@ -78,7 +78,7 @@ bool Funduino::butt_pressed(byte i) {
   return false;
 }
 
-bool Funduino::butt_released(byte i) {
+bool Funduino::buttReleased(byte i) {
   if (i==0 || i>3) return false;
   byte m=(0x08<<i); // 0x10 << (i-1)
   if ((_buttrig & m)!=0) {
@@ -91,13 +91,13 @@ bool Funduino::butt_released(byte i) {
 void Funduino::step() {
   static byte prev=0,pm=0;
   byte wb;
-  mili = millis();
-  _mimi=((unsigned long)mili) & 0xFFFF;
-  if (pm==_mimi & 0xFF) // same millis - skip checks
+  Mili = millis();
+  _mimi=((unsigned long)Mili) & 0xFFFF;
+  if (pm==(_mimi & 0xFF)) // same millis - skip checks
     return;
   pm=_mimi & 0xFF;
-  if ((mili & 0x1E) != prev) {
-    prev = mili & 0x1E;
+  if ((Mili & 0x1E) != prev) {
+    prev = Mili & 0x1E;
     if ((_flags&1)!=0) {
       digitalWrite(FUNDUI_DISPLATCH,LOW); // Konec Latch
       _flags&=0xFE;
@@ -123,7 +123,7 @@ void Funduino::step() {
     _butstate = (_butstate & 0x70) | wb;
   }
   // Timers check
-  for (byte i=0,m=1;i<11;i++,m=(i==8?1:m<<=1)) {
+  for (byte i=0,m=1;i<11;i++,m=(i==8?1:(m<<1))) {
     if (_timers_togo[i] == _timers_start[i]) continue; // disabled timer
     if (_timers_togo[i] <= _mimi &&
         (_timers_togo[i] > _timers_start[i] ||
@@ -169,7 +169,7 @@ void Funduino::begin() {
   digitalWrite(FUNDUI_LED2,HIGH);
   digitalWrite(FUNDUI_LED3,HIGH);
   digitalWrite(FUNDUI_LED4,HIGH);
-  mili = millis();
+  Mili = millis();
   memset(_timers_start,0,sizeof(_timers_start));
   memset(_timers_togo,0,sizeof(_timers_togo));
   memset(_timers_repeat,0,sizeof(_timers_repeat));
@@ -188,20 +188,20 @@ void Funduino::dispInt(int val,byte fmt,byte minchars) {
   int i;
   enableDisplay(true);
   if (fmt==HEX) {
-    disbuff[0]=Dis_table[((uint16_t)val)>>12];
-    disbuff[1]=Dis_table[(((uint16_t)val)>>8)&0x0F];
-    disbuff[2]=Dis_table[(((uint16_t)val)>>4)&0x0F];
-    disbuff[3]=Dis_table[((uint16_t)val)&0x0F];
+    disbuff[0]=DisTable[((uint16_t)val)>>12];
+    disbuff[1]=DisTable[(((uint16_t)val)>>8)&0x0F];
+    disbuff[2]=DisTable[(((uint16_t)val)>>4)&0x0F];
+    disbuff[3]=DisTable[((uint16_t)val)&0x0F];
   } else if (fmt==BIN) {
-    disbuff[0]=Dis_table[(((uint16_t)val)>>3)&1];
-    disbuff[1]=Dis_table[(((uint16_t)val)>>2)&1];
-    disbuff[2]=Dis_table[(((uint16_t)val)>>1)&1];
-    disbuff[3]=Dis_table[((uint16_t)val)&1];
+    disbuff[0]=DisTable[(((uint16_t)val)>>3)&1];
+    disbuff[1]=DisTable[(((uint16_t)val)>>2)&1];
+    disbuff[2]=DisTable[(((uint16_t)val)>>1)&1];
+    disbuff[3]=DisTable[((uint16_t)val)&1];
   } else if (fmt==OCT) {
-    disbuff[0]=Dis_table[(((uint16_t)val)>>9)&0x07];
-    disbuff[1]=Dis_table[(((uint16_t)val)>>6)&0x07];
-    disbuff[2]=Dis_table[(((uint16_t)val)>>3)&0x07];
-    disbuff[3]=Dis_table[((uint16_t)val)&0x07];
+    disbuff[0]=DisTable[(((uint16_t)val)>>9)&0x07];
+    disbuff[1]=DisTable[(((uint16_t)val)>>6)&0x07];
+    disbuff[2]=DisTable[(((uint16_t)val)>>3)&0x07];
+    disbuff[3]=DisTable[((uint16_t)val)&0x07];
   } else { // asi DECIMAL   
     if (val > 9999) {
       disbuff[0]=disbuff[1]=disbuff[2]=disbuff[3]=0x10; // 9.9.9.9. 
@@ -217,19 +217,19 @@ void Funduino::dispInt(int val,byte fmt,byte minchars) {
     } else {
       i=val;
     }
-    disbuff[3]=Dis_table[divmod10(&i)] & 0x7F; // des. tecka
+    disbuff[3]=DisTable[divmod10(&i)] & 0x7F; // des. tecka
     if (i)
-      disbuff[2]=Dis_table[divmod10(&i)];
+      disbuff[2]=DisTable[divmod10(&i)];
     else
-      disbuff[2]=minchars<2?0xFF:Dis_table[0]; // prazdno / 0
+      disbuff[2]=minchars<2?0xFF:DisTable[0]; // prazdno / 0
     if (i) 
-      disbuff[1]=Dis_table[divmod10(&i)];
+      disbuff[1]=DisTable[divmod10(&i)];
     else
-      disbuff[1]=minchars<3?0xFF:Dis_table[0]; // prazdno / 0
+      disbuff[1]=minchars<3?0xFF:DisTable[0]; // prazdno / 0
     if (i) 
-      disbuff[0]=Dis_table[divmod10(&i)];
+      disbuff[0]=DisTable[divmod10(&i)];
     else if (val >= 0) // uz je tam minus !!!
-      disbuff[0]=minchars<4?0xFF:Dis_table[0]; // prazdno / 0
+      disbuff[0]=minchars<4?0xFF:DisTable[0]; // prazdno / 0
   }
 }
 
@@ -273,6 +273,7 @@ void Funduino::dispFloat(float val) {
 }
 
 void Funduino::display(float val) {dispFloat(val);}
+void Funduino::display(double val) {dispFloat((float)val);}
 void Funduino::display(int val) {dispInt(val,DEC,1);}
 
 bool Funduino::butt(byte button) {
@@ -291,5 +292,5 @@ bool Funduino::butt1() {return (_butstate & 0x10) == 0;}
 bool Funduino::butt2() {return (_butstate & 0x20) == 0;}
 bool Funduino::butt3() {return (_butstate & 0x40) == 0;}
 
-constexpr const unsigned char Funduino::Dis_table[16] = 
+constexpr const unsigned char Funduino::DisTable[16] = 
   {0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8,0x80,0x90,0x88,0x83,0xC6,0xA1,0x86,0x8E};

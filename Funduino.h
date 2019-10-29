@@ -32,11 +32,11 @@ class Funduino {
  public:
   static int divmod10(int *i);
   static float mapf(float x, float a, float b, float c, float d);
-  static const unsigned char Dis_table[16];
+  static const unsigned char DisTable[16];
 
   // data pro segmentovky
   unsigned char disbuff[4];
-  long mili;
+  long Mili;
 
   void step();
   Funduino();
@@ -49,18 +49,19 @@ class Funduino {
   void dispInt(int val,byte fmt=DEC,byte minchars=1);
   void dispFloat(float val);
   void display(float val);
+  void display(double val);
   void display(int val);
   bool butt1();
   bool butt2();
   bool butt3();
   bool butt(byte button);
   byte buttons();
-  void timer_start(byte i, int time, bool repeat=true);
-  inline void timer_stop(byte i) {timer_start(i,0,false);}
-  int timer_time(byte i);
-  bool is_timer(byte i);
-  bool butt_pressed(byte i);
-  bool butt_released(byte i);
+  void timerStart(byte i, int time, bool repeat=true);
+  inline void timerStop(byte i) {timerStart(i,0,false);}
+  int timerTime(byte i);
+  bool isTimer(byte i);
+  bool buttPressed(byte i);
+  bool buttReleased(byte i);
   inline void led(byte i,bool on=true) {
     digitalWrite(
        i==2?FUNDUI_LED2:(i==3?FUNDUI_LED3:(i==4?FUNDUI_LED4:FUNDUI_LED1))
