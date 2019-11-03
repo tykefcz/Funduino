@@ -12,6 +12,20 @@ Funduino F = Funduino();
 Servo FS1 = Servo();
 void setup() {
   F.begin();
+  FS1.attach(FUNDUI_SERVO1);
+  F.clearDisplay();
+  F.dispDigit(0x0F,0);
+  //   _a_
+  // f|   |b
+  //   -g-
+  // e|   |c
+  //   -d- .
+  //
+  //   .gfedcba = .-',_,'^
+  // 0b11111111 0b11111111
+  F.dispDigit(0b10111111,1,false); // - 
+  F.dispDigit(0b11000111,1,false); // L
+  F.dispDigit(0b00001010,1,false); // P.
 }
 
 void loop() {
@@ -71,7 +85,7 @@ void loop() {
       }
     }
     if (changed) {
-      angle=constrain(angle,10,170);
+      angle=constrain(angle,1,179);
       FS1.write(angle);
     }
   }

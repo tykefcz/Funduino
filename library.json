@@ -1,6 +1,6 @@
 {
     "name": "Funduino",
-    "description": "Nastroje pro Funduino (HeSa1) modul k Arduno UNO",
+    "description": "Functions for Funduino (HeSa1) module/shield - Arduno UNO",
     "keywords": "funduino, HeSa, HeSa1, display",
     "authors": [
         {
@@ -10,12 +10,14 @@
         }
     ],
     "repository": {
-        "type": "none",
-        "url": "https://localhost/Funduino"
+        "type": "git",
+        "url": "https://github.com/tykefcz/Funduino.git"
     },
     "version": "1.0.1",
-    "frameworks": "Arduino",
+    "downloadUrl": "http://github.com/tykefcz/releases/download/v1.0.1/Funduino-1.0.1.zip",
+    "frameworks": "arduino",
+    "platforms": "atmelavr",
     "examples": [
-        "examples/*/*.pde"
+        "examples/*/*.ino"
     ]
 }

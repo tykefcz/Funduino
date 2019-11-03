@@ -46,6 +46,7 @@ class Funduino {
   void segment(byte segs, byte digit=0);
   void clearDisplay();
   float trimVolt();
+  void dispDigit(byte val, byte pos, bool digit = true);
   void dispInt(int val,byte fmt=DEC,byte minchars=1);
   void dispFloat(float val);
   void display(float val);

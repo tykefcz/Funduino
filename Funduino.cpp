@@ -184,6 +184,12 @@ float Funduino::trimVolt() {
   return 0.0049 * analogRead(A0);
 }
 
+void Funduino::dispDigit(byte val, byte pos, bool digit) {
+  enableDisplay(true);
+  disbuff[pos & 3] = digit?DisTable[val & 0x0F]:val;
+}
+
+
 void Funduino::dispInt(int val,byte fmt,byte minchars) {
   int i;
   enableDisplay(true);
